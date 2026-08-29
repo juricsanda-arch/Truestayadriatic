@@ -235,7 +235,9 @@ export default function Home() {
                     9,99 €
                   </p>
                   <a
-                    href="mailto:truestay.info@gmail.com?subject=Narud%C5%BEba%20-%20Kod%20jadranske%20%C4%8Dasti"
+                    href="https://payhip.com/b/6Yzvn"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="rounded-sm border border-gold px-6 py-3 font-mono-terminal text-sm uppercase tracking-[0.15em] text-gold transition hover:bg-gold hover:text-navy-950"
                   >
                     Naruči knjigu
