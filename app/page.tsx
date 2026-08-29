@@ -19,7 +19,7 @@ const trustLayers: TrustLayer[] = [
     label: "Sloj 01",
     title: "Za goste",
     description:
-      "AI provjera oglasa prije rezervacije. Članarina i personalizirani pronalazak ili planiranje odmora po osobnim kriterijima.",
+      "Stručna provjera oglasa prije rezervacije. Članarina i personalizirani pronalazak ili planiranje odmora po osobnim kriterijima.",
     price: "od 4,00 €/mj ili 30 €/sezona",
     href: "/provjera?mod=gosti",
     cta: "Provjeri oglas",
@@ -28,7 +28,7 @@ const trustLayers: TrustLayer[] = [
     label: "Sloj 02",
     title: "Za pružatelje usluga",
     description:
-      "AI izvještaj o online ugledu, za sve djelatnosti u turizmu i ugostiteljstvu — sustavna analiza recenzija, spomena i digitalnog otiska vašeg objekta.",
+      "Stručni izvještaj o online ugledu, za sve djelatnosti u turizmu i ugostiteljstvu — sustavna analiza recenzija, spomena i digitalnog otiska vašeg objekta.",
     price: "30–49 € po izvještaju",
     href: "/provjera?mod=pruzatelji",
     cta: "Naruči izvještaj",

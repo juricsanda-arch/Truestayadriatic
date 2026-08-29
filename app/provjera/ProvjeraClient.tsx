@@ -3,9 +3,10 @@
 import { useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import VerifiedNotes from "@/components/VerifiedNotes";
 import UpgradeForm from "@/components/UpgradeForm";
-import type { AnalysisResult, CheckMode } from "@/lib/types";
+import type { CheckMode } from "@/lib/types";
+
+const RECIPIENT = "truestay.info@gmail.com";
 
 const TABS: { id: CheckMode; label: string }[] = [
   { id: "gosti", label: "Za goste" },
@@ -35,19 +36,17 @@ export default function ProvjeraClient({ initialMode }: { initialMode: CheckMode
   const [propertyName, setPropertyName] = useState("");
   const [url, setUrl] = useState("");
   const [text, setText] = useState("");
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [result, setResult] = useState<AnalysisResult | null>(null);
+  const [sent, setSent] = useState(false);
 
   function switchMode(next: CheckMode) {
     setMode(next);
-    setResult(null);
+    setSent(false);
     setError(null);
   }
 
-  async function handleAnalyze() {
+  function handleSubmit() {
     setError(null);
-    setResult(null);
 
     const trimmedUrl = url.trim();
     const hasUrl = trimmedUrl.length > 0;
@@ -62,27 +61,20 @@ export default function ProvjeraClient({ initialMode }: { initialMode: CheckMode
       return;
     }
 
-    setLoading(true);
-    try {
-      const res = await fetch("/api/analyze", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ mode, propertyName, text, url: trimmedUrl }),
-      });
+    const modeLabel = mode === "gosti" ? "Za goste" : "Za pružatelje usluga";
+    const subject = `Zahtjev za provjeru — ${modeLabel}`;
+    const bodyLines = [
+      `Način provjere: ${modeLabel}`,
+      `Naziv objekta: ${propertyName.trim() || "—"}`,
+      `URL oglasa: ${trimmedUrl || "—"}`,
+      "",
+      "Tekst za analizu:",
+      text.trim() || "—",
+    ];
+    const mailto = `mailto:${RECIPIENT}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyLines.join("\n"))}`;
 
-      const data = await res.json();
-
-      if (!res.ok) {
-        setError(data?.error ?? "Analiza nije uspjela. Pokušajte ponovno.");
-        return;
-      }
-
-      setResult(data as AnalysisResult);
-    } catch {
-      setError("Greška u vezi sa serverom. Provjerite internetsku vezu i pokušajte ponovno.");
-    } finally {
-      setLoading(false);
-    }
+    window.location.href = mailto;
+    setSent(true);
   }
 
   return (
@@ -98,9 +90,9 @@ export default function ProvjeraClient({ initialMode }: { initialMode: CheckMode
             Provjera vjerodostojnosti
           </h1>
           <p className="mt-4 max-w-2xl font-sans text-cream-dim">
-            Zalijepite tekst oglasa, opisa ili recenzija — TrueStay Adriatic AI
-            analitičar vraća &ldquo;Verified Notes&rdquo; zapisnik s
-            konkretnim zapažanjima i preporukama.
+            Zalijepite tekst oglasa, opis ili URL i pošaljite nam ga na uvid.
+            Tim TrueStay Adriatic ručno pregledava svaki upit i javlja se s
+            procjenom vjerodostojnosti.
           </p>
 
           {/* Tabs */}
@@ -147,7 +139,7 @@ export default function ProvjeraClient({ initialMode }: { initialMode: CheckMode
                 className="w-full border border-cream-dim/25 bg-navy-900/60 px-4 py-3 font-sans text-sm text-cream placeholder:text-cream-dim/40 outline-none focus:border-gold"
               />
               <p className="mt-1 font-mono-terminal text-[11px] text-cream-dim/50">
-                Zalijepite poveznicu i sami ćemo dohvatiti sadržaj stranice.
+                Zalijepite poveznicu na oglas koji želite da pregledamo.
               </p>
             </div>
 
@@ -182,18 +174,36 @@ export default function ProvjeraClient({ initialMode }: { initialMode: CheckMode
             )}
 
             <button
-              onClick={handleAnalyze}
-              disabled={loading}
-              className="rounded-sm bg-gold px-7 py-3.5 font-mono-terminal text-sm uppercase tracking-[0.15em] text-navy-950 transition hover:bg-gold-light disabled:cursor-not-allowed disabled:opacity-60"
+              onClick={handleSubmit}
+              className="rounded-sm bg-gold px-7 py-3.5 font-mono-terminal text-sm uppercase tracking-[0.15em] text-navy-950 transition hover:bg-gold-light"
             >
-              {loading ? "Analiziram…" : "Analiziraj"}
+              Pošalji na provjeru
             </button>
           </div>
 
-          {/* Result */}
-          {result && (
+          {/* Confirmation + upsell */}
+          {sent && (
             <div className="mt-12 space-y-10">
-              <VerifiedNotes result={result} />
+              <div className="terminal-frame p-6 sm:p-8">
+                <p className="font-mono-terminal text-xs uppercase tracking-[0.2em] text-gold">
+                  [ Zahtjev poslan ]
+                </p>
+                <p className="mt-3 font-sans text-sm leading-relaxed text-cream">
+                  Otvorili smo vaš mail program s pripremljenom porukom. Ako se
+                  nije otvorio automatski, pošaljite upit ručno na{" "}
+                  <a
+                    href={`mailto:${RECIPIENT}`}
+                    className="text-gold underline underline-offset-4"
+                  >
+                    {RECIPIENT}
+                  </a>
+                  .
+                </p>
+                <p className="mt-2 font-sans text-sm leading-relaxed text-cream-dim">
+                  Osnovna provjera je besplatna — javljamo se u roku 24–48h.
+                  Za detaljniju, prioritetnu analizu pogledajte opcije ispod.
+                </p>
+              </div>
 
               <div>
                 <p className="font-mono-terminal text-xs uppercase tracking-[0.3em] text-gold">
@@ -209,7 +219,7 @@ export default function ProvjeraClient({ initialMode }: { initialMode: CheckMode
                       <UpgradeForm
                         title="Osobno mišljenje stručnjaka"
                         price="19 €"
-                        description="Naš stručnjak ručno pregledava oglas i Verified Notes nalaz te vam šalje osobnu procjenu prije rezervacije."
+                        description="Naš stručnjak ručno pregledava oglas i šalje vam osobnu, detaljnu procjenu prije rezervacije."
                         subject="Zahtjev - Osobno mišljenje stručnjaka (19€)"
                         contextLabel="Naziv objekta"
                         contextValue={propertyName || "nije naveden"}
@@ -227,7 +237,7 @@ export default function ProvjeraClient({ initialMode }: { initialMode: CheckMode
                     <UpgradeForm
                       title="Osobni pregled"
                       price="35 €"
-                      description="Naš stručnjak ručno pregledava vaš online ugled i Verified Notes nalaz te vam šalje detaljne preporuke za poboljšanje."
+                      description="Naš stručnjak ručno pregledava vaš online ugled i šalje vam detaljne preporuke za poboljšanje."
                       subject="Zahtjev - Osobni pregled (35€)"
                       contextLabel="Naziv objekta"
                       contextValue={propertyName || "nije naveden"}
