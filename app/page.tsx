@@ -3,7 +3,6 @@ import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CategoryGrid from "@/components/CategoryGrid";
-import InstagramEmbed from "@/components/InstagramEmbed";
 
 interface TrustLayer {
   label: string;
@@ -48,11 +47,10 @@ const trustLayers: TrustLayer[] = [
   },
 ];
 
-const reels = [
-  "https://www.instagram.com/reel/DY4HSvKMPhv/",
-  "https://www.instagram.com/reel/DY61eeLsaW5/",
-  "https://www.instagram.com/p/DaVjdKXDOh9/",
-  "https://www.instagram.com/reel/DbIsnNMMHUR/",
+const videos = [
+  "/videos/verified-01.mp4",
+  "/videos/verified-02.mp4",
+  "/videos/verified-03.mp4",
 ];
 
 export default function Home() {
@@ -255,10 +253,17 @@ export default function Home() {
               </p>
             </div>
 
-            {reels.length > 0 && (
-              <div className="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-                {reels.map((url) => (
-                  <InstagramEmbed key={url} url={url} />
+            {videos.length > 0 && (
+              <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                {videos.map((src) => (
+                  <video
+                    key={src}
+                    src={src}
+                    controls
+                    playsInline
+                    preload="metadata"
+                    className="aspect-[9/16] w-full border border-gold/20 bg-navy-950 object-cover"
+                  />
                 ))}
               </div>
             )}
