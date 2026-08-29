@@ -51,6 +51,7 @@ const trustLayers: TrustLayer[] = [
 const reels = [
   "https://www.instagram.com/reel/DY4HSvKMPhv/",
   "https://www.instagram.com/reel/DY61eeLsaW5/",
+  "https://www.instagram.com/p/DaVjdKXDOh9/",
 ];
 
 const gallery = [
