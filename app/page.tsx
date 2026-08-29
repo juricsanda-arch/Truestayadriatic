@@ -78,7 +78,7 @@ export default function Home() {
         <section className="bg-texture relative overflow-hidden border-b border-gold/15 bg-navy-950">
           <div className="mx-auto max-w-5xl px-6 py-24 sm:px-10 sm:py-32">
             <p className="font-mono-terminal text-xs uppercase tracking-[0.3em] text-gold">
-              [ Sustav digitalnog povjerenja ]
+              Sustav digitalnog povjerenja
             </p>
 
             <h1 className="mt-6 font-serif-display text-5xl leading-[1.05] font-semibold text-cream sm:text-7xl">
