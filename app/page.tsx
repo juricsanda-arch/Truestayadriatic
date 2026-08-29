@@ -3,6 +3,7 @@ import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CategoryGrid from "@/components/CategoryGrid";
+import InstagramEmbed from "@/components/InstagramEmbed";
 
 interface TrustLayer {
   label: string;
@@ -45,6 +46,11 @@ const trustLayers: TrustLayer[] = [
     href: "mailto:truestay.info@gmail.com?subject=Upit%20-%20Verified%20video%20sustav%20za%20destinaciju",
     cta: "Zatraži ponudu",
   },
+];
+
+const reels = [
+  "https://www.instagram.com/reel/DY4HSvKMPhv/",
+  "https://www.instagram.com/reel/DY61eeLsaW5/",
 ];
 
 const gallery = [
@@ -256,7 +262,15 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {reels.length > 0 && (
+              <div className="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+                {reels.map((url) => (
+                  <InstagramEmbed key={url} url={url} />
+                ))}
+              </div>
+            )}
+
+            <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {gallery.map((item) => (
                 <div
                   key={item.tag}
