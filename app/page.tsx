@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -195,25 +196,16 @@ export default function Home() {
         <section id="knjiga" className="border-b border-gold/15 bg-navy-950">
           <div className="mx-auto max-w-6xl px-6 py-20 sm:px-10 sm:py-28">
             <div className="grid gap-12 sm:grid-cols-[280px_1fr] sm:items-center">
-              {/* Naslovnica placeholder */}
-              <div className="mx-auto aspect-[2/3] w-56 border border-gold/30 bg-gradient-to-b from-navy-800 to-navy-950 p-6 shadow-[0_0_40px_rgba(201,163,90,0.08)] sm:mx-0 sm:w-full">
-                <div className="flex h-full flex-col justify-between border border-gold/25 p-5 text-center">
-                  <p className="font-mono-terminal text-[10px] uppercase tracking-[0.3em] text-gold/70">
-                    Edicija Velebit
-                  </p>
-                  <div>
-                    <p className="font-serif-display text-2xl leading-tight text-cream">
-                      Kod
-                      <br />
-                      jadranske
-                      <br />
-                      časti
-                    </p>
-                  </div>
-                  <p className="font-mono-terminal text-[10px] uppercase tracking-[0.25em] text-cream-dim/60">
-                    TrueStay Adriatic
-                  </p>
-                </div>
+              {/* Naslovnica knjige */}
+              <div className="mx-auto aspect-[2/3] w-56 overflow-hidden border border-gold/30 shadow-[0_0_40px_rgba(201,163,90,0.12)] sm:mx-0 sm:w-full">
+                <Image
+                  src="/kod-jadranske-casti-cover.jpg"
+                  alt="Naslovnica knjige Kod jadranske časti — Kome prepuštamo more?"
+                  width={1023}
+                  height={1382}
+                  className="h-full w-full object-cover"
+                  priority
+                />
               </div>
 
               <div>
