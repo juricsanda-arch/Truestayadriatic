@@ -53,6 +53,21 @@ const videos = [
   "/videos/verified-03.mp4",
 ];
 
+const guideSlides = [
+  "/vodic/01-cover.jpg",
+  "/vodic/02-korak-01.jpg",
+  "/vodic/03-korak-02.jpg",
+  "/vodic/04-korak-03.jpg",
+  "/vodic/05-korak-04.jpg",
+  "/vodic/06-korak-05.jpg",
+  "/vodic/07-korak-06.jpg",
+  "/vodic/08-korak-07.jpg",
+  "/vodic/09-korak-08.jpg",
+  "/vodic/10-korak-09.jpg",
+  "/vodic/11-korak-10.jpg",
+  "/vodic/12-cta.jpg",
+];
+
 export default function Home() {
   return (
     <div className="flex flex-1 flex-col">
@@ -107,6 +122,39 @@ export default function Home() {
               >
                 Istraži slojeve
               </Link>
+            </div>
+          </div>
+        </section>
+
+        {/* VODIČ */}
+        <section id="vodic" className="border-b border-gold/15 bg-navy-950">
+          <div className="mx-auto max-w-6xl px-6 py-16 sm:px-10 sm:py-20">
+            <p className="font-mono-terminal text-xs uppercase tracking-[0.3em] text-gold">
+              [ Besplatni vodič ]
+            </p>
+            <h2 className="mt-4 font-serif-display text-3xl font-semibold text-cream sm:text-4xl">
+              10 koraka do sigurne rezervacije
+            </h2>
+            <p className="mt-3 max-w-2xl font-sans text-sm text-cream-dim">
+              Besplatni checklist za pametno rezerviranje smještaja na
+              Jadranu — prevucite udesno za sve savjete.
+            </p>
+
+            <div className="mt-8 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+              {guideSlides.map((src, i) => (
+                <div
+                  key={src}
+                  className="aspect-square w-[78%] flex-none snap-center overflow-hidden border border-gold/20 sm:w-[42%] lg:w-[28%]"
+                >
+                  <Image
+                    src={src}
+                    alt={`Vodič — 10 koraka do sigurne rezervacije, slajd ${i + 1}`}
+                    width={1080}
+                    height={1080}
+                    className="h-full w-full object-cover"
+                  />
+                </div>
+              ))}
             </div>
           </div>
         </section>
