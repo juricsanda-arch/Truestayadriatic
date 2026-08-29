@@ -48,9 +48,9 @@ const trustLayers: TrustLayer[] = [
 ];
 
 const videos = [
-  "/videos/verified-01.mp4",
-  "/videos/verified-02.mp4",
-  "/videos/verified-03.mp4",
+  { src: "/videos/verified-01.mp4", orientation: "portrait" as const },
+  { src: "/videos/verified-02.mp4", orientation: "portrait" as const },
+  { src: "/videos/verified-03.mp4", orientation: "landscape" as const },
 ];
 
 const guideSlides = [
@@ -303,14 +303,18 @@ export default function Home() {
 
             {videos.length > 0 && (
               <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-                {videos.map((src) => (
+                {videos.map((video) => (
                   <video
-                    key={src}
-                    src={src}
+                    key={video.src}
+                    src={video.src}
                     controls
                     playsInline
                     preload="metadata"
-                    className="aspect-[9/16] w-full border border-gold/20 bg-navy-950 object-cover"
+                    className={`w-full self-start border border-gold/20 bg-navy-950 object-cover ${
+                      video.orientation === "landscape"
+                        ? "aspect-video"
+                        : "aspect-[9/16]"
+                    }`}
                   />
                 ))}
               </div>
