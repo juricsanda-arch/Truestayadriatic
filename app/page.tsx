@@ -40,7 +40,7 @@ const trustLayers: TrustLayer[] = [
     title: "Za destinacije",
     description:
       "Verified video sustav i AI Concierge za gradove i turističke zajednice — vizualna vjerodostojnost na razini destinacije.",
-    price: "od 3.500 €",
+    price: "od 1.999 €",
     href: "mailto:truestay.info@gmail.com?subject=Upit%20-%20Verified%20video%20sustav%20za%20destinaciju",
     cta: "Zatraži ponudu",
   },
