@@ -55,15 +55,6 @@ const reels = [
   "https://www.instagram.com/reel/DbIsnNMMHUR/",
 ];
 
-const gallery = [
-  { tag: "Verified Stay", desc: "Provjeren smještaj, bez filtera" },
-  { tag: "Hero", desc: "Uvodni destinacijski kadar" },
-  { tag: "Gastro Short", desc: "Autentična gastro priča, 30s" },
-  { tag: "Coast Short", desc: "Obala u stvarnom svjetlu" },
-  { tag: "Konoba Story", desc: "Verificirana priča domaćina" },
-  { tag: "Hotel Story", desc: "Hotelski doživljaj, bez uljepšavanja" },
-];
-
 export default function Home() {
   return (
     <div className="flex flex-1 flex-col">
@@ -271,28 +262,6 @@ export default function Home() {
                 ))}
               </div>
             )}
-
-            <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-              {gallery.map((item) => (
-                <div
-                  key={item.tag}
-                  className="group relative flex aspect-video flex-col justify-end overflow-hidden border border-gold/20 bg-navy-950 p-5"
-                >
-                  <div className="bg-texture absolute inset-0 opacity-60 transition group-hover:opacity-90" />
-                  <div className="relative">
-                    <span className="font-mono-terminal text-[11px] uppercase tracking-[0.2em] text-gold">
-                      [ {item.tag} ]
-                    </span>
-                    <p className="mt-2 font-sans text-sm text-cream-dim">
-                      {item.desc}
-                    </p>
-                  </div>
-                  <span className="absolute top-4 right-4 font-mono-terminal text-[10px] uppercase tracking-[0.2em] text-cream-dim/50">
-                    Placeholder
-                  </span>
-                </div>
-              ))}
-            </div>
           </div>
         </section>
       </main>
