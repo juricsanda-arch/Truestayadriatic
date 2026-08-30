@@ -1,8 +1,6 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import PlocaForm from "@/components/PlocaForm";
-import { getSupabaseServerClient } from "@/lib/supabase";
-import type { BoardMessage } from "@/lib/supabase";
 
 export const metadata = {
   title: "Ploča poruka — TrueStay Adriatic",
@@ -10,43 +8,22 @@ export const metadata = {
     "Gosti i vlasnici dijele ideje za unapređenje turizma i ugostiteljstva na Jadranu.",
 };
 
-export const revalidate = 0;
+interface BoardMessage {
+  role: "gost" | "vlasnik";
+  name?: string;
+  message: string;
+  date: string;
+}
+
+// Objavljene poruke — dodaju se ručno nakon pregleda.
+const messages: BoardMessage[] = [];
 
 const ROLE_LABEL: Record<BoardMessage["role"], string> = {
   gost: "Gost",
   vlasnik: "Vlasnik",
 };
 
-async function getApprovedMessages(): Promise<BoardMessage[]> {
-  const supabase = getSupabaseServerClient();
-  if (!supabase) return [];
-
-  const { data, error } = await supabase
-    .from("messages")
-    .select("*")
-    .eq("approved", true)
-    .order("created_at", { ascending: false })
-    .limit(100);
-
-  if (error) {
-    console.error("Fetch messages error:", error);
-    return [];
-  }
-
-  return data as BoardMessage[];
-}
-
-function formatDate(iso: string) {
-  return new Date(iso).toLocaleDateString("hr-HR", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  });
-}
-
-export default async function PlocaPage() {
-  const messages = await getApprovedMessages();
-
+export default function PlocaPage() {
   return (
     <div className="flex flex-1 flex-col">
       <Header />
@@ -75,9 +52,9 @@ export default async function PlocaPage() {
                 Još nema objavljenih poruka — budite prvi.
               </p>
             ) : (
-              messages.map((m) => (
+              messages.map((m, i) => (
                 <div
-                  key={m.id}
+                  key={i}
                   className="border-l-2 border-gold/25 bg-navy-900/40 p-5"
                 >
                   <div className="flex flex-wrap items-center gap-2">
@@ -88,7 +65,7 @@ export default async function PlocaPage() {
                       <span className="font-sans text-sm text-cream">{m.name}</span>
                     )}
                     <span className="font-mono-terminal text-[11px] text-cream-dim/50">
-                      {formatDate(m.created_at)}
+                      {m.date}
                     </span>
                   </div>
                   <p className="mt-2 font-sans text-sm leading-relaxed text-cream-dim">

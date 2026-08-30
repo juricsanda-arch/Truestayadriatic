@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 
+const RECIPIENT = "truestay.info@gmail.com";
+
 const ROLES: { id: "gost" | "vlasnik"; label: string }[] = [
   { id: "gost", label: "Gost" },
   { id: "vlasnik", label: "Vlasnik / pružatelj usluga" },
@@ -11,11 +13,10 @@ export default function PlocaForm() {
   const [role, setRole] = useState<"gost" | "vlasnik">("gost");
   const [name, setName] = useState("");
   const [message, setMessage] = useState("");
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [sent, setSent] = useState(false);
 
-  async function handleSubmit() {
+  function handleSubmit() {
     setError(null);
 
     if (message.trim().length < 5) {
@@ -23,28 +24,21 @@ export default function PlocaForm() {
       return;
     }
 
-    setLoading(true);
-    try {
-      const res = await fetch("/api/poruke", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ role, name, message }),
-      });
-      const data = await res.json();
+    const roleLabel = role === "gost" ? "Gost" : "Vlasnik / pružatelj usluga";
+    const subject = `Poruka za ploču — ${roleLabel}`;
+    const bodyLines = [
+      `Uloga: ${roleLabel}`,
+      `Ime: ${name.trim() || "— (anonimno)"}`,
+      "",
+      "Poruka:",
+      message.trim(),
+    ];
+    const mailto = `mailto:${RECIPIENT}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyLines.join("\n"))}`;
 
-      if (!res.ok) {
-        setError(data?.error ?? "Slanje poruke nije uspjelo. Pokušajte ponovno.");
-        return;
-      }
-
-      setSent(true);
-      setMessage("");
-      setName("");
-    } catch {
-      setError("Greška u vezi sa serverom. Provjerite internetsku vezu i pokušajte ponovno.");
-    } finally {
-      setLoading(false);
-    }
+    window.location.href = mailto;
+    setSent(true);
+    setMessage("");
+    setName("");
   }
 
   if (sent) {
@@ -54,8 +48,8 @@ export default function PlocaForm() {
           [ Poruka poslana ]
         </p>
         <p className="mt-3 font-sans text-sm leading-relaxed text-cream">
-          Hvala! Vaša poruka čeka pregled i pojavit će se na ploči čim bude
-          odobrena.
+          Otvorili smo vaš mail program s pripremljenom porukom. Nakon
+          pregleda, poruka se može objaviti na ploči.
         </p>
         <button
           onClick={() => setSent(false)}
@@ -122,10 +116,9 @@ export default function PlocaForm() {
 
         <button
           onClick={handleSubmit}
-          disabled={loading}
-          className="rounded-sm bg-gold px-6 py-3 font-mono-terminal text-xs uppercase tracking-[0.15em] text-navy-950 transition hover:bg-gold-light disabled:cursor-not-allowed disabled:opacity-60"
+          className="rounded-sm bg-gold px-6 py-3 font-mono-terminal text-xs uppercase tracking-[0.15em] text-navy-950 transition hover:bg-gold-light"
         >
-          {loading ? "Šaljem…" : "Pošalji poruku"}
+          Pošalji poruku
         </button>
       </div>
     </div>
