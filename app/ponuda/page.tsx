@@ -4,7 +4,7 @@ import CategoryGrid from "@/components/CategoryGrid";
 import { OFFER_PACKAGES } from "@/lib/offers";
 
 export const metadata = {
-  title: "Ponuda za vlasnike — TrueStay Adriatic",
+  title: "Ponuda za vlasnike",
   description:
     "TrueStay Adriatic paketi za vlasnike smještaja: Quick Check, Reality Check, Reputation Report i Content Experience.",
 };

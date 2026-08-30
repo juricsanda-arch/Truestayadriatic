@@ -3,7 +3,7 @@ import Footer from "@/components/Footer";
 import PlocaForm from "@/components/PlocaForm";
 
 export const metadata = {
-  title: "Ploča poruka — TrueStay Adriatic",
+  title: "Ploča poruka",
   description:
     "Gosti i vlasnici dijele ideje za unapređenje turizma i ugostiteljstva na Jadranu.",
 };

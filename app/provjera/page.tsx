@@ -2,9 +2,9 @@ import ProvjeraClient from "./ProvjeraClient";
 import type { CheckMode } from "@/lib/types";
 
 export const metadata = {
-  title: "Provjera — TrueStay Adriatic",
+  title: "Provjera",
   description:
-    "AI alat za provjeru vjerodostojnosti oglasa smještaja i online ugleda pružatelja usluga.",
+    "Provjera vjerodostojnosti oglasa smještaja i online ugleda pružatelja usluga — besplatna osnovna provjera, stručni pregled na zahtjev.",
 };
 
 export default async function ProvjeraPage({
