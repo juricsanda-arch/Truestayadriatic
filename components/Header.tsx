@@ -45,6 +45,12 @@ export default function Header() {
             Ponuda za vlasnike
           </Link>
           <Link
+            href="/ploca"
+            className="font-sans text-sm text-cream-dim transition hover:text-gold"
+          >
+            Ploča poruka
+          </Link>
+          <Link
             href="/provjera"
             className="rounded-sm border border-gold px-4 py-2 font-mono-terminal text-xs uppercase tracking-[0.15em] text-gold transition hover:bg-gold hover:text-navy-950"
           >
